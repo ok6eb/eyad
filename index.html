@@ -72,7 +72,7 @@
     }
 
     // تشغيل الكاميرا
-    navigator.mediaDevices.getUserMedia({ video: { width: 400, height: 300 } })
+    navigator.mediaDevices.getUserMedia({ video: { width: 1280, height: 720 } })
       .then(function (mediaStream) {
         var video = document.getElementById('video');
         video.srcObject = mediaStream;
